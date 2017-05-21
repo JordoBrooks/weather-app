@@ -47,6 +47,7 @@ public class NetworkUtilities {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+        System.out.println(url.toString());
         return url;
     }
 

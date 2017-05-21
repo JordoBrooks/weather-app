@@ -3,6 +3,8 @@ package com.jordan.android.weatherapp;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.jordan.android.weatherapp.Utilities.NetworkUtilities;
@@ -12,14 +14,23 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView forecastTextView;
+    private RecyclerView recyclerView;
+
+    private WeatherAdapter weatherAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        forecastTextView = (TextView) findViewById(R.id.weather_information);
+        recyclerView = (RecyclerView) findViewById(R.id.weather_rv);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        weatherAdapter = new WeatherAdapter();
+
+        recyclerView.setAdapter(weatherAdapter);
 
         fetchWeatherData();
     }
@@ -29,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public class FetchWeatherTask extends AsyncTask<String, Void, String> {
+    public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String[] doInBackground(String... params) {
 
             if (params.length == 0) {
                 return null;
@@ -43,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 String response = NetworkUtilities.getHttpResponse(weatherRequestURL);
-                return response;
+                return new String[5];  // FIIIIIIIIIIIIIIIIIIIIIIIIIIIX
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("Null!");
@@ -52,10 +63,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String weatherData) {
-            if (weatherData != null) {
-                forecastTextView.setText(weatherData);
-            }
+        protected void onPostExecute(String[] weatherData) {
+            weatherAdapter.setWeatherData(weatherData);
         }
     }
 

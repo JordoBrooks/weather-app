@@ -6,15 +6,9 @@
     android:layout_height="match_parent"
     tools:context="com.jordan.android.weatherapp.MainActivity">
 
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/weather_rv" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/weather_information"
-            android:padding="16dp"
-            android:textSize="20sp"/>
-    </ScrollView>
 </FrameLayout>

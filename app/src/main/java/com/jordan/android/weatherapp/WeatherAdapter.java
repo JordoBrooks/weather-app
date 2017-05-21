@@ -43,6 +43,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherA
 
     @Override
     public int getItemCount() {
+        if (weatherData == null) {
+            return 0;
+        }
         return weatherData.length;
     }
 

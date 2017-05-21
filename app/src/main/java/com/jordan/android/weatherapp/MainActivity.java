@@ -8,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.jordan.android.weatherapp.Utilities.NetworkUtilities;
+import com.jordan.android.weatherapp.Utilities.OpenWeatherMapParser;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -54,12 +57,18 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 String response = NetworkUtilities.getHttpResponse(weatherRequestURL);
-                return new String[5];  // FIIIIIIIIIIIIIIIIIIIIIIIIIIIX
+                String[] parsedWeather = OpenWeatherMapParser.parseWeather(MainActivity.this, response);
+                return parsedWeather;
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("Null!");
+                System.out.println("IOException thrown!");
+                return null;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                System.out.println("JSONException thrown!");
                 return null;
             }
+
         }
 
         @Override

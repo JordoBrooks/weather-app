@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jordan.android.weatherapp.Utilities.NetworkUtilities;
 import com.jordan.android.weatherapp.Utilities.OpenWeatherMapParser;
@@ -15,7 +16,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements WeatherAdapter.WeatherClickHandler {
 
     private RecyclerView recyclerView;
 
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        weatherAdapter = new WeatherAdapter();
+        weatherAdapter = new WeatherAdapter(this);
 
         recyclerView.setAdapter(weatherAdapter);
 
@@ -77,4 +78,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onClick() {
+        Toast.makeText(this, "Item clicked!", Toast.LENGTH_SHORT).show();
+    }
 }

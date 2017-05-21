@@ -8,22 +8,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * Created by jordan on 20/05/17.
+ *   Adapter class for RecyclerView
  */
 
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherAdapterViewHolder> {
 
     private String[] weatherData;
 
-    public class WeatherAdapterViewHolder extends RecyclerView.ViewHolder {
+    private WeatherClickHandler clickHandler;
 
-        private TextView weatherTextView;
-
-        public WeatherAdapterViewHolder(View view) {
-            super(view);
-            weatherTextView = (TextView) view.findViewById(R.id.weather_item_tv);
-        }
-
+    public WeatherAdapter(WeatherClickHandler clickHandler) {
+        this.clickHandler = clickHandler;
     }
 
     @Override
@@ -52,5 +47,25 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherA
     public void setWeatherData(String[] weatherData) {
         this.weatherData = weatherData;
         notifyDataSetChanged();
+    }
+
+    public interface WeatherClickHandler {
+        void onClick();
+    }
+
+    public class WeatherAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private TextView weatherTextView;
+
+        public WeatherAdapterViewHolder(View view) {
+            super(view);
+            weatherTextView = (TextView) view.findViewById(R.id.weather_item_tv);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            clickHandler.onClick();
+        }
     }
 }

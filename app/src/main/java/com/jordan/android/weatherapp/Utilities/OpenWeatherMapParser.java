@@ -19,6 +19,16 @@ public class OpenWeatherMapParser {
 
     private static final long MILLISECONDS_IN_DAY = 86400000;
 
+    /**
+     *  Method to produce an array of Strings, with each element containing a human readable string
+     *  of weather
+     *
+     * @param context
+     * @param JSONReponse       The JSON response received from the OpenWeatherMap server
+     * @return                  Array of nicely readable strings of weather
+     * @throws JSONException    If there's any JSON formatting issues
+     */
+
     public static String[] parseWeather(Context context, String JSONReponse) throws JSONException {
 
         long now = System.currentTimeMillis();

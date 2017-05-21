@@ -39,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
         fetchWeatherData();
     }
 
+    /**
+     *  Uses background AsyncTask to load in weather data
+     */
     private void fetchWeatherData() {
         new FetchWeatherTask().execute("Vancouver");
     }

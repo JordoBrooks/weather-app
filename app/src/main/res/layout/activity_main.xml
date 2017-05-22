@@ -11,4 +11,11 @@
         android:layout_height="match_parent"
         android:id="@+id/weather_rv" />
 
+    <ProgressBar
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/loading_circle"
+        android:layout_gravity="center"
+        android:visibility="invisible"/>
+
 </FrameLayout>

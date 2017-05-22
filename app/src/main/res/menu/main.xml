@@ -7,5 +7,10 @@
         android:id="@+id/action_map"
         android:title="Location on Map"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_refresh"
+        android:orderInCategory="1"
+        android:title="Refresh"
+        app:showAsAction="ifRoom"/>
 
 </menu>

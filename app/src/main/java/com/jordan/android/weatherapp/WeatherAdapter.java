@@ -65,7 +65,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherA
     /**
      *  The interface to handles on click messages sent from WeatherAdapterViewHolder
      */
-    
+
     public interface WeatherClickHandler {
         void onClick();
     }

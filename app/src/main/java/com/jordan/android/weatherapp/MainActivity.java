@@ -1,5 +1,6 @@
 package com.jordan.android.weatherapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
 
     @Override
     public void onClick() {
-        Toast.makeText(this, "Item clicked!", Toast.LENGTH_SHORT).show();
+        Intent intentToOpenDayDetailActivity = new Intent(this, DayDetailActivity.class);
+        startActivity(intentToOpenDayDetailActivity);
     }
 }

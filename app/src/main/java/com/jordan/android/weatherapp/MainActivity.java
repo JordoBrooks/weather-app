@@ -17,7 +17,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity implements WeatherAdapter.WeatherClickHandler {
+public class MainActivity extends AppCompatActivity implements WeatherClickHandler {
 
     private RecyclerView recyclerView;
 
@@ -83,8 +83,9 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
     }
 
     @Override
-    public void onClick() {
+    public void onClick(String weatherForTheDayClicked) {
         Intent intentToOpenDayDetailActivity = new Intent(this, DayDetailActivity.class);
+        intentToOpenDayDetailActivity.putExtra(Intent.EXTRA_TEXT, weatherForTheDayClicked);
         startActivity(intentToOpenDayDetailActivity);
     }
 }

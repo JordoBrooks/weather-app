@@ -62,14 +62,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherA
         notifyDataSetChanged();
     }
 
-    /**
-     *  The interface to handles on click messages sent from WeatherAdapterViewHolder
-     */
-
-    public interface WeatherClickHandler {
-        void onClick();
-    }
-
     public class WeatherAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView weatherTextView;
@@ -82,7 +74,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherA
 
         @Override
         public void onClick(View v) {
-            clickHandler.onClick();
+            String weatherForThisDay = weatherData[getAdapterPosition()];
+            clickHandler.onClick(weatherForThisDay);
         }
     }
 }

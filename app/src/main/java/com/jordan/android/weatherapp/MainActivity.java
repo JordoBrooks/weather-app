@@ -90,9 +90,17 @@ public class MainActivity extends AppCompatActivity implements WeatherClickHandl
 
             if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivity(intent);
+                return true;
             } else {
                 Toast.makeText(this, "No appropriate map app installed!", Toast.LENGTH_SHORT);
+                return false;
             }
+        }
+
+        if (id == R.id.action_settings) {
+            Intent intentToStartSettingsActivity = new Intent(this, SettingsActivity.class);
+            startActivity(intentToStartSettingsActivity);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

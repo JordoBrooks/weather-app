@@ -56,6 +56,13 @@ public class DayDetailActivity extends AppCompatActivity {
             startActivity(intentToShare);
             return true;
         }
+
+        if (id == R.id.action_settings) {
+            Intent intentToStartSettingsActivity = new Intent(this, SettingsActivity.class);
+            startActivity(intentToStartSettingsActivity);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 }

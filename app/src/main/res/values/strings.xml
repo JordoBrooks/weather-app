@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Weather App</string>
+    <string name="action_map">Location on Map</string>
+    <string name="action_share">Share</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

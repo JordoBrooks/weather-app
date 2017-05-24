@@ -1,6 +1,7 @@
 package com.jordan.android.weatherapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.app.LoaderManager;
@@ -8,6 +9,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -18,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jordan.android.weatherapp.Utilities.AppPreferences;
 import com.jordan.android.weatherapp.Utilities.NetworkUtilities;
 import com.jordan.android.weatherapp.Utilities.OpenWeatherMapParser;
 
@@ -26,7 +29,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity implements WeatherClickHandler, LoaderManager.LoaderCallbacks<String[]> {
+public class MainActivity extends AppCompatActivity implements WeatherClickHandler, LoaderManager.LoaderCallbacks<String[]>, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private RecyclerView recyclerView;
 
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements WeatherClickHandl
     private ProgressBar loadingCircle;
 
     private static final int WEATHER_LOADER_ID = 0;
+
+    private static boolean PREFS_CHANGED = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,26 @@ public class MainActivity extends AppCompatActivity implements WeatherClickHandl
         LoaderManager.LoaderCallbacks<String[]> callback = this;
 
         getSupportLoaderManager().initLoader(WEATHER_LOADER_ID, null, callback);
+
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (PREFS_CHANGED) {
+            getSupportLoaderManager().restartLoader(WEATHER_LOADER_ID, null, this);
+            PREFS_CHANGED = false;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -82,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements WeatherClickHandl
         }
 
         if (id == R.id.action_map) {
-            String locationString = "Vancouver, BC";
+            String locationString = AppPreferences.getPreferredWeatherLocation(this);
             Uri encodedLocation = Uri.parse("geo:0,0?q=" + locationString);
 
             Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -158,6 +183,11 @@ public class MainActivity extends AppCompatActivity implements WeatherClickHandl
 
     @Override
     public void onLoaderReset(Loader<String[]> loader) {
+        // Not used
+    }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        PREFS_CHANGED = true;
     }
 }
